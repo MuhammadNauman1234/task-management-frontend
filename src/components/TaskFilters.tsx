@@ -49,14 +49,14 @@ const TaskFilters = React.memo(() => {
 
         {/* Status Filter */}
         <Select
-          value={filter.status || ''}
-          onValueChange={(value) => setFilter({ status: value as TaskFilter['status'] || undefined })}
+          value={filter.status || 'all'}
+          onValueChange={(value) => setFilter({ status: value === 'all' ? undefined : value as TaskFilter['status'] })}
         >
           <SelectTrigger className="w-32 h-8">
             <SelectValue placeholder="Status" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Status</SelectItem>
+            <SelectItem value="all">All Status</SelectItem>
             <SelectItem value="todo">To Do</SelectItem>
             <SelectItem value="in_progress">In Progress</SelectItem>
             <SelectItem value="done">Done</SelectItem>
@@ -65,14 +65,14 @@ const TaskFilters = React.memo(() => {
 
         {/* Priority Filter */}
         <Select
-          value={filter.priority || ''}
-          onValueChange={(value) => setFilter({ priority: value as TaskFilter['priority'] || undefined })}
+          value={filter.priority || 'all'}
+          onValueChange={(value) => setFilter({ priority: value === 'all' ? undefined : value as TaskFilter['priority'] })}
         >
           <SelectTrigger className="w-32 h-8">
             <SelectValue placeholder="Priority" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Priority</SelectItem>
+            <SelectItem value="all">All Priority</SelectItem>
             <SelectItem value="low">Low</SelectItem>
             <SelectItem value="medium">Medium</SelectItem>
             <SelectItem value="high">High</SelectItem>
@@ -81,14 +81,14 @@ const TaskFilters = React.memo(() => {
 
         {/* Assignee Filter */}
         <Select
-          value={filter.assignee_id || ''}
-          onValueChange={(value) => setFilter({ assignee_id: value || undefined })}
+          value={filter.assignee_id || 'all'}
+          onValueChange={(value) => setFilter({ assignee_id: value === 'all' ? undefined : value })}
         >
           <SelectTrigger className="w-40 h-8">
             <SelectValue placeholder="Assignee" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Assignees</SelectItem>
+            <SelectItem value="all">All Assignees</SelectItem>
             {users.map((user) => (
               <SelectItem key={user.id} value={user.id}>
                 {user.full_name}
