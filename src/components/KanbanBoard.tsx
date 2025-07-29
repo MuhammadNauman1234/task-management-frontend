@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useCallback } from "react";
 import {
   DndContext,
   DragEndEvent,
@@ -8,17 +8,17 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { arrayMove, SortableContext } from "@dnd-kit/sortable";
+import { SortableContext } from "@dnd-kit/sortable";
 import KanbanColumn from "./KanbanColumn";
 import TaskCard from "./TaskCard";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { updateTaskAsync, deleteTaskAsync, fetchTasksAsync, updateTaskStatusOptimistic, revertTaskStatusOptimistic } from "@/store/slices/taskSlice";
+import { updateTaskAsync, deleteTaskAsync, updateTaskStatusOptimistic, revertTaskStatusOptimistic } from "@/store/slices/taskSlice";
 import { Task } from "@/types/task";
 import { toast } from "sonner";
 
-const KanbanBoard = () => {
+const KanbanBoard = React.memo(() => {
   const dispatch = useAppDispatch();
-  const { tasks, filter } = useAppSelector((state) => state.tasks);
+  const { tasks } = useAppSelector((state) => state.tasks);
   const [activeTask, setActiveTask] = React.useState<Task | null>(null);
 
   const sensors = useSensors(
@@ -29,7 +29,7 @@ const KanbanBoard = () => {
     })
   );
 
-  // Group tasks by status
+  // Memoize grouped tasks to prevent unnecessary recalculations
   const groupedTasks = useMemo(() => {
     return {
       todo: tasks.filter((task) => task.status === "todo"),
@@ -38,7 +38,8 @@ const KanbanBoard = () => {
     };
   }, [tasks]);
 
-  const columns = [
+  // Memoize columns configuration
+  const columns = useMemo(() => [
     {
       id: "todo",
       title: "To Do",
@@ -54,15 +55,19 @@ const KanbanBoard = () => {
       title: "Done", 
       tasks: groupedTasks.done,
     },
-  ] as const;
+  ] as const, [groupedTasks]);
 
-  const handleDragStart = (event: DragStartEvent) => {
+  // Memoize valid statuses array
+  const validStatuses = useMemo<Task["status"][]>(() => ['todo', 'in_progress', 'done'], []);
+
+  // Use useCallback for event handlers to prevent unnecessary re-renders
+  const handleDragStart = useCallback((event: DragStartEvent) => {
     const { active } = event;
     const task = tasks.find((t) => t.id.toString() === active.id);
     setActiveTask(task || null);
-  };
+  }, [tasks]);
 
-  const handleDragEnd = async (event: DragEndEvent) => {
+  const handleDragEnd = useCallback(async (event: DragEndEvent) => {
     const { active, over } = event;
     setActiveTask(null);
 
@@ -72,7 +77,6 @@ const KanbanBoard = () => {
     const newStatus = over.id as Task["status"];
     
     // Validate that newStatus is a valid status value
-    const validStatuses: Task["status"][] = ['todo', 'in_progress', 'done'];
     if (!validStatuses.includes(newStatus)) {
       console.error('❌ Invalid status value:', newStatus);
       toast.error(`Invalid status: ${newStatus}`);
@@ -103,26 +107,24 @@ const KanbanBoard = () => {
       dispatch(revertTaskStatusOptimistic({ taskId, originalStatus }));
       toast.error(error.message || "Failed to update task");
     }
-  };
+  }, [dispatch, tasks, validStatuses]);
 
-  const handleDeleteTask = async (taskId: number) => {
+  const handleDeleteTask = useCallback(async (taskId: number) => {
     try {
       await dispatch(deleteTaskAsync(taskId)).unwrap();
       toast.success("Task deleted successfully");
-      
-      // Refresh tasks with current filters after deletion
-      const currentFilters = {
-        ...(filter.status && { status: filter.status }),
-        ...(filter.priority && { priority: filter.priority }),
-        ...(filter.assignee_id && { assignee_id: filter.assignee_id }),
-        ...(filter.search && { search: filter.search }),
-      };
-      dispatch(fetchTasksAsync(currentFilters));
-      
     } catch (error: any) {
       toast.error(error.message || "Failed to delete task");
     }
-  };
+  }, [dispatch]);
+
+  // Memoize sortable items for each column
+  const sortableItems = useMemo(() => {
+    return columns.reduce((acc, column) => {
+      acc[column.id] = column.tasks.map((task) => task.id.toString());
+      return acc;
+    }, {} as Record<string, string[]>);
+  }, [columns]);
 
   return (
     <DndContext
@@ -134,7 +136,7 @@ const KanbanBoard = () => {
         {columns.map((column) => (
           <SortableContext
             key={column.id}
-            items={column.tasks.map((task) => task.id.toString())}
+            items={sortableItems[column.id]}
           >
             <KanbanColumn
               id={column.id}
@@ -156,6 +158,8 @@ const KanbanBoard = () => {
       </DragOverlay>
     </DndContext>
   );
-};
+});
+
+KanbanBoard.displayName = "KanbanBoard";
 
 export default KanbanBoard;
