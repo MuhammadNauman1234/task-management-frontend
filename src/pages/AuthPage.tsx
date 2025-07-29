@@ -1,20 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import LoginForm from "@/components/auth/LoginForm";
 import RegisterForm from "@/components/auth/RegisterForm";
-import { useAppSelector } from "@/hooks/redux";
+import { useAppSelector, useAppDispatch } from "@/hooks/redux";
+import { clearError } from "@/store/slices/authSlice";
 
-const AuthPage: React.FC = () => {
+const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
   const { isAuthenticated } = useAppSelector((state) => state.auth);
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  // Redirect if already authenticated (e.g., page refresh with valid token)
+  // Clear any existing auth errors when component mounts
   useEffect(() => {
+    dispatch(clearError());
+  }, [dispatch]);
+
+  // Redirect to dashboard if already authenticated
+  useEffect(() => {
+    // Use replace: true to prevent going back to auth page
     if (isAuthenticated) {
-      navigate("/dashboard", { replace: true });
+      return;
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated]);
+
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" replace={true} />;
+  }
 
   return (
     <div className="min-h-screen bg-brand-gradient flex items-center justify-center p-4">
@@ -23,7 +34,7 @@ const AuthPage: React.FC = () => {
         <div className="text-center lg:text-left space-y-6">
           <div className="space-y-4">
             <h1 className="text-4xl lg:text-6xl font-bold gradient-text-primary">
-              Sprint Board Hub
+              Kanban Board Hub
             </h1>
             <p className="text-xl lg:text-2xl text-muted-foreground">
               Streamline your project management with our intuitive task board

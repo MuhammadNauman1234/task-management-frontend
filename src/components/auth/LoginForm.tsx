@@ -35,6 +35,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
   const navigate = useNavigate();
   const { isLoading, error, isAuthenticated, user } = useAppSelector((state) => state.auth);
 
+  // Clear any existing errors when component mounts
+  useEffect(() => {
+    dispatch(clearError());
+  }, [dispatch]);
+
   const {
     register,
     handleSubmit,
@@ -161,14 +166,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
           </p>
         </div>
 
-        <div className="border-t pt-4">
-          <div className="text-xs text-muted-foreground space-y-1">
-            <p className="font-semibold">Demo Accounts:</p>
-            <p>📧 admin@example.com | 🔑 admin123</p>
-            <p>📧 user@example.com | 🔑 user123</p>
-            <p>📧 test@example.com | 🔑 test123</p>
-          </div>
-        </div>
       </CardContent>
     </Card>
   );

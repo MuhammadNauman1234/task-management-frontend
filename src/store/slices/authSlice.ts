@@ -200,7 +200,11 @@ const authSlice = createSlice({
         state.user = null;
         state.token = null;
         state.isAuthenticated = false;
-        state.error = action.payload as string;
+        // Don't set error state for "No token found" - this is expected when user isn't logged in
+        const errorMessage = action.payload as string;
+        if (errorMessage !== "No token found") {
+          state.error = errorMessage;
+        }
       });
 
     // Logout

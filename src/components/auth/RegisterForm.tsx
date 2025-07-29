@@ -43,6 +43,11 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) => {
   const navigate = useNavigate();
   const { isLoading, error, isAuthenticated, user } = useAppSelector((state) => state.auth);
 
+  // Clear any existing errors when component mounts
+  useEffect(() => {
+    dispatch(clearError());
+  }, [dispatch]);
+
   const {
     register,
     handleSubmit,
