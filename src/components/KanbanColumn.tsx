@@ -1,96 +1,82 @@
-import React from 'react';
-import { useDroppable } from '@dnd-kit/core';
-import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import TaskCard from './TaskCard';
-import { Task } from '@/types/task';
+import React from "react";
+import { useDroppable } from "@dnd-kit/core";
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import TaskCard from "./TaskCard";
+import { Task } from "@/types/task";
 
 interface KanbanColumnProps {
-  status: Task['status'];
+  id: string;
+  title: string;
   tasks: Task[];
-  onTaskEdit?: (task: Task) => void;
-  onTaskDelete?: (id: string) => void;
+  onDelete: (taskId: number) => void;
 }
 
-const getColumnConfig = (status: Task['status']) => {
-  switch (status) {
-    case 'todo':
-      return {
-        title: 'To Do',
-        badgeClass: 'bg-todo text-todo-foreground',
-        borderClass: 'border-todo/20',
-      };
-    case 'in_progress':
-      return {
-        title: 'In Progress',
-        badgeClass: 'bg-in-progress text-in-progress-foreground',
-        borderClass: 'border-in-progress/20',
-      };
-    case 'done':
-      return {
-        title: 'Done',
-        badgeClass: 'bg-done text-done-foreground',
-        borderClass: 'border-done/20',
-      };
-  }
-};
-
-const KanbanColumn = React.memo(({ status, tasks, onTaskEdit, onTaskDelete }: KanbanColumnProps) => {
+const KanbanColumn: React.FC<KanbanColumnProps> = ({
+  id,
+  title,
+  tasks,
+  onDelete,
+}) => {
   const { setNodeRef, isOver } = useDroppable({
-    id: status,
+    id: id,
   });
 
-  const config = getColumnConfig(status);
+  const getStatusColor = (status: Task["status"]) => {
+    switch (status) {
+      case "todo":
+        return "bg-slate-100 text-slate-800";
+      case "in_progress":
+        return "bg-blue-100 text-blue-800";
+      case "done":
+        return "bg-green-100 text-green-800";
+      default:
+        return "bg-gray-100 text-gray-800";
+    }
+  };
 
   return (
-    <div className="flex-1 min-w-0">
-      <Card 
-        className={`h-full transition-all duration-200 ${
-          isOver ? `ring-2 ${config.borderClass} shadow-lg` : ''
-        }`}
-      >
-        <CardHeader className="pb-4">
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-sm font-semibold text-card-foreground">
-              {config.title}
-            </CardTitle>
-            <Badge className={`text-xs ${config.badgeClass}`}>
-              {tasks.length}
-            </Badge>
-          </div>
-        </CardHeader>
-        
-        <CardContent className="p-4 pt-0">
-          <div
-            ref={setNodeRef}
-            className="space-y-3 min-h-[200px]"
+    <Card className={`w-80 flex-shrink-0 ${isOver ? "ring-2 ring-primary" : ""}`}>
+      <CardHeader className="pb-3">
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-sm font-medium">{title}</CardTitle>
+          <Badge 
+            variant="secondary" 
+            className={`text-xs ${getStatusColor(id as Task["status"])}`}
           >
-            <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
-              {tasks.map((task) => (
-                <TaskCard
-                  key={task.id}
-                  task={task}
-                  onEdit={onTaskEdit}
-                  onDelete={onTaskDelete}
-                />
-              ))}
-            </SortableContext>
-            
-            {tasks.length === 0 && (
-              <div className="flex items-center justify-center h-32 border-2 border-dashed border-muted rounded-lg">
-                <p className="text-sm text-muted-foreground">
-                  Drop tasks here
-                </p>
-              </div>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+            {tasks.length}
+          </Badge>
+        </div>
+      </CardHeader>
+      
+      <CardContent className="pt-0">
+        <div
+          ref={setNodeRef}
+          className="min-h-[200px] space-y-3"
+        >
+          <SortableContext
+            items={tasks.map((task) => task.id.toString())}
+            strategy={verticalListSortingStrategy}
+          >
+            {tasks.map((task) => (
+              <TaskCard 
+                key={task.id} 
+                task={task} 
+                onDelete={onDelete}
+              />
+            ))}
+          </SortableContext>
+          
+          {tasks.length === 0 && (
+            <div className="text-center py-8 text-muted-foreground text-sm">
+              No tasks in {title.toLowerCase()}
+            </div>
+          )}
+        </div>
+      </CardContent>
+    </Card>
   );
-});
-
-KanbanColumn.displayName = 'KanbanColumn';
+};
 
 export default KanbanColumn;

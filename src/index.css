@@ -2,66 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Task Management Dashboard Design System - Clean White/Gray/Black Theme */
-
 @layer base {
   :root {
-    --background: 255 255 255;
-    --foreground: 15 23 42;
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
 
-    --card: 255 255 255;
-    --card-foreground: 15 23 42;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
 
-    --popover: 255 255 255;
-    --popover-foreground: 15 23 42;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 15 23 42;
-    --primary-foreground: 255 255 255;
+    --primary: 213 89% 55%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 248 250 252;
-    --secondary-foreground: 71 85 105;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
 
-    --muted: 248 250 252;
-    --muted-foreground: 100 116 139;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 241 245 249;
-    --accent-foreground: 15 23 42;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
 
-    --destructive: 15 23 42;
-    --destructive-foreground: 255 255 255;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 226 232 240;
-    --input: 226 232 240;
-    --ring: 15 23 42;
-
-    /* Task Management Specific Colors - Grayscale */
-    --success: 71 85 105;
-    --success-foreground: 255 255 255;
-    --warning: 100 116 139;
-    --warning-foreground: 255 255 255;
-    --todo: 148 163 184;
-    --todo-foreground: 15 23 42;
-    --in-progress: 100 116 139;
-    --in-progress-foreground: 255 255 255;
-    --done: 71 85 105;
-    --done-foreground: 255 255 255;
-
-    /* Priority Colors - Grayscale */
-    --priority-low: 148 163 184;
-    --priority-medium: 100 116 139;
-    --priority-high: 71 85 105;
-
-    /* Gradients - Subtle grayscale */
-    --gradient-primary: linear-gradient(135deg, hsl(15 23% 42%), hsl(71 85% 105%));
-    --gradient-success: linear-gradient(135deg, hsl(148 163% 184%), hsl(71 85% 105%));
-    --gradient-warning: linear-gradient(135deg, hsl(100 116% 139%), hsl(148 163% 184%));
-    --gradient-background: linear-gradient(135deg, hsl(255 255% 255%), hsl(248 250% 252%));
-
-    /* Shadows */
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 213 89% 55%;
 
     --radius: 0.5rem;
 
@@ -80,39 +49,44 @@
     --sidebar-border: 220 13% 91%;
 
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --brand-primary-start: 213 89% 55%; /* Blue-500 */
+    --brand-primary-mid: 188 85% 60%; /* Cyan-500 */
+    --brand-primary-end: 213 89% 65%; /* Blue-400 */
+
+    --brand-secondary-start: 188 85% 60%; /* Cyan-500 */
+    --brand-secondary-mid: 172 85% 55%; /* Teal-500 */
+    --brand-secondary-end: 188 85% 70%; /* Cyan-400 */
   }
 
   .dark {
-    --background: 15 23 42;
-    --foreground: 248 250 252;
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
 
-    --card: 30 41 59;
-    --card-foreground: 248 250 252;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 30 41 59;
-    --popover-foreground: 248 250 252;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 248 250 252;
-    --primary-foreground: 15 23 42;
+    --primary: 213 89% 55%;
+    --primary-foreground: 222.2 84% 4.9%;
 
-    --secondary: 71 85 105;
-    --secondary-foreground: 248 250 252;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 71 85 105;
-    --muted-foreground: 148 163 184;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 71 85 105;
-    --accent-foreground: 248 250 252;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
 
-    --destructive: 248 250 252;
-    --destructive-foreground: 15 23 42;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 71 85 105;
-    --input: 71 85 105;
-    --ring: 248 250 252;
-
-    /* Dark mode gradients */
-    --gradient-background: linear-gradient(135deg, hsl(15 23% 42%), hsl(30 41% 59%));
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 213 89% 55%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -131,5 +105,243 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Consistent Card Hover Animations */
+@layer components {
+  /* Standard Card Hover - For general cards */
+  .card-hover-standard {
+    @apply transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1 hover:border-primary/20;
+  }
+
+  /* Enhanced Card Hover - For feature cards and important content */
+  .card-hover-enhanced {
+    @apply transition-all duration-300 ease-in-out hover:shadow-xl hover:-translate-y-2 hover:scale-[1.02] hover:border-primary/30;
+  }
+
+  /* Premium Card Hover - For premium/special cards */
+  .card-hover-premium {
+    @apply transition-all duration-500 ease-out hover:shadow-2xl hover:-translate-y-3 hover:scale-105 hover:border-primary/40;
+  }
+
+  /* Subtle Card Hover - For minimal cards */
+  .card-hover-subtle {
+    @apply transition-all duration-200 ease-in-out hover:shadow-md hover:border-primary/15;
+  }
+
+  /* Interactive Card Hover - For clickable cards */
+  .card-hover-interactive {
+    @apply transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1 hover:scale-[1.01] hover:border-primary/25 cursor-pointer;
+  }
+
+  /* Brand-aligned Gradient Text Utilities */
+  .gradient-text-primary {
+    @apply bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-600 bg-clip-text text-transparent;
+  }
+
+  .gradient-text-secondary {
+    @apply bg-gradient-to-r from-cyan-500 via-teal-500 to-cyan-600 bg-clip-text text-transparent;
+  }
+
+  .gradient-text-accent {
+    @apply bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-500 bg-clip-text text-transparent;
+  }
+
+  /* Brand-aligned Gradient Button Utilities */
+  .gradient-button-primary {
+    @apply bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-600 hover:from-blue-600 hover:via-cyan-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200;
+  }
+
+  .gradient-button-secondary {
+    @apply bg-gradient-to-r from-cyan-500 via-teal-500 to-cyan-600 hover:from-cyan-600 hover:via-teal-600 hover:to-cyan-700 text-white shadow-md hover:shadow-lg transition-all duration-200;
+  }
+
+  .gradient-button-accent {
+    @apply bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-500 hover:from-blue-500 hover:via-cyan-500 hover:to-teal-600 text-white shadow-md hover:shadow-lg transition-all duration-200;
+  }
+
+  /* Brand-aligned Badge Gradients */
+  .badge-gradient-primary {
+    @apply bg-gradient-to-r from-blue-100 via-cyan-100 to-blue-200 text-blue-800 border-blue-300;
+  }
+
+  .badge-gradient-secondary {
+    @apply bg-gradient-to-r from-cyan-100 via-teal-100 to-cyan-200 text-cyan-800 border-cyan-300;
+  }
+
+  .badge-gradient-success {
+    @apply bg-gradient-to-r from-green-100 via-emerald-100 to-green-200 text-green-800 border-green-300;
+  }
+
+  .badge-gradient-warning {
+    @apply bg-gradient-to-r from-orange-100 via-amber-100 to-orange-200 text-orange-800 border-orange-300;
+  }
+
+  /* Brand-aligned Icon Background Gradients */
+  .icon-gradient-primary {
+    @apply bg-gradient-to-br from-blue-500 via-cyan-500 to-blue-600 text-white;
+  }
+
+  .icon-gradient-secondary {
+    @apply bg-gradient-to-br from-cyan-500 via-teal-500 to-cyan-600 text-white;
+  }
+
+  .icon-gradient-accent {
+    @apply bg-gradient-to-br from-blue-400 via-cyan-400 to-teal-500 text-white;
+  }
+
+  /* Brand-aligned Card Gradients */
+  .card-gradient-primary {
+    @apply bg-gradient-to-br from-blue-50 via-cyan-50 to-blue-100 border-blue-200;
+  }
+
+  .card-gradient-secondary {
+    @apply bg-gradient-to-br from-cyan-50 via-teal-50 to-cyan-100 border-cyan-200;
+  }
+
+  /* Brand-aligned Tab Gradients */
+  .tab-gradient-active {
+    @apply bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-600 text-white;
+  }
+
+  .tab-gradient-inactive {
+    @apply bg-gradient-to-r from-blue-100 via-cyan-100 to-blue-200 text-blue-700 hover:from-blue-200 hover:via-cyan-200 hover:to-blue-300;
+  }
+
+  /* Background Gradient Utilities */
+  .bg-brand-gradient {
+    background: linear-gradient(
+      135deg,
+      #f9fafb 0%,
+      #f0f9ff 20%,
+      #ecfdf5 40%,
+      #f0fdfa 60%,
+      #eff6ff 100%
+    );
+  }
+
+  .bg-brand-gradient-dark {
+    background: linear-gradient(
+      135deg,
+      #0f172a 0%,
+      #1e293b 20%,
+      #0f766e 40%,
+      #155e75 60%,
+      #1e40af 100%
+    );
+  }
+
+  /* Hero Section Gradients */
+  .hero-gradient-bg {
+    background: linear-gradient(
+      135deg,
+      #f0f9ff 0%,
+      #ecfdf5 25%,
+      #f0fdfa 50%,
+      #eff6ff 75%,
+      #f8fafc 100%
+    );
+  }
+
+  /* Premium Feature Gradients */
+  .premium-gradient-bg {
+    @apply bg-gradient-to-br from-blue-50 via-cyan-50 to-teal-50 border-blue-200;
+  }
+
+  .premium-gradient-border {
+    @apply border-2 border-transparent bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-600 bg-clip-border;
+  }
+
+  /* AI Insight Gradient Background */
+  .ai-gradient-bg {
+    background: linear-gradient(135deg, #f9fafb 0%, #f0f9ff 50%, #ecfdf5 100%);
+  }
+
+  /* Chart and Data Visualization Gradients */
+  .chart-gradient-1 {
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  }
+
+  .chart-gradient-2 {
+    background: linear-gradient(135deg, #06b6d4, #14b8a6);
+  }
+
+  .chart-gradient-3 {
+    background: linear-gradient(135deg, #14b8a6, #10b981);
+  }
+
+  /* Enhanced hover effects with brand gradients */
+  .hover-gradient-primary {
+    @apply transition-all duration-300 hover:bg-gradient-to-r hover:from-blue-50 hover:via-cyan-50 hover:to-blue-100;
+  }
+
+  .hover-gradient-secondary {
+    @apply hover:bg-gradient-to-r hover:from-cyan-500 hover:via-teal-500 hover:to-cyan-600 hover:text-white;
+  }
+}
+
+/* Custom Scrollbar Styles */
+@layer utilities {
+  /* Thin scrollbar for dropdowns and containers */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(209 213 219) rgb(249 250 251);
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: rgb(249 250 251);
+    border-radius: 3px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: rgb(209 213 219);
+    border-radius: 3px;
+    border: 1px solid rgb(243 244 246);
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: rgb(156 163 175);
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-corner {
+    background: rgb(249 250 251);
+  }
+
+  /* Custom scrollbar colors */
+  .scrollbar-thumb-gray-300::-webkit-scrollbar-thumb {
+    background: rgb(209 213 219);
+  }
+
+  .scrollbar-thumb-gray-400::-webkit-scrollbar-thumb {
+    background: rgb(156 163 175);
+  }
+
+  .scrollbar-track-gray-100::-webkit-scrollbar-track {
+    background: rgb(243 244 246);
+  }
+
+  .hover\:scrollbar-thumb-gray-400:hover::-webkit-scrollbar-thumb {
+    background: rgb(156 163 175);
+  }
+
+  /* Hide scrollbar for cleaner look when needed */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Smooth scrolling behavior */
+  .scroll-smooth {
+    scroll-behavior: smooth;
   }
 }
